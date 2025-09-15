@@ -118,7 +118,7 @@
       max-width: 1200px;
       margin: auto;
     }
-    .services, .why-choose, .pricing, .testimonials, .doctors, .innovations, .symptom-checker, .vision-tips {
+    .services, .why-choose, .pricing, .testimonials, .doctors, .innovations, .symptom-checker, .vision-tips, .ai-diagnostics {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5rem;
@@ -157,11 +157,11 @@
       padding: 1rem;
       margin-top: 2rem;
     }
-    form label, form input, form button {
+    form label, form input, form button, form select {
       display: block;
       margin-bottom: 0.5rem;
     }
-    form input, form button {
+    form input, form button, form select {
       padding: 0.5rem;
       width: 100%;
       max-width: 400px;
@@ -186,6 +186,7 @@
       <a href="#testimonials">Testimonials</a>
       <a href="#appointment">Appointment</a>
       <a href="#innovations">Innovations</a>
+      <a href="#ai-diagnostics">AI Diagnostics</a>
       <a href="#vision-tips">Vision Tips</a>
       <a href="#symptom">Symptom Checker</a>
       <a href="#contact">Contact</a>
@@ -269,6 +270,22 @@
     </div>
   </section>
 
+  <section id="ai-diagnostics" class="section">
+    <h2>AI Diagnostics Demo</h2>
+    <form id="ai-form">
+      <label for="symptom-select">Select a symptom:</label>
+      <select id="symptom-select" required>
+        <option value="">--Choose--</option>
+        <option value="blurry">Blurry Vision</option>
+        <option value="pain">Eye Pain</option>
+        <option value="headache">Headache</option>
+        <option value="dry">Dry Eyes</option>
+      </select>
+      <button type="submit">Analyze</button>
+    </form>
+    <div id="ai-result" style="margin-top:1rem; font-weight:bold;"></div>
+  </section>
+
   <section id="vision-tips" class="section">
     <h2>Vision Tips</h2>
     <div class="card" id="tip-box">Loading daily eye-care tip...</div>
@@ -312,16 +329,46 @@
       if(checked.length === 0) {
         symptomResult.textContent = "Please select at least one symptom.";
         symptomResult.style.color = "red";
-      } else if(checked.includes("Blurry Vision") || checked.includes("Eye Pain")) {
-        symptomResult.textContent = "You should consider a detailed eye check-up soon.";
-        symptomResult.style.color = "darkred";
       } else {
-        symptomResult.textContent = "Your symptoms seem mild, but consult a doctor if they persist.";
-        symptomResult.style.color = "green";
+        let details = "";
+        if(checked.includes("Blurry Vision")) details += "Blurry Vision: Could indicate refractive errors or cataracts. ";
+        if(checked.includes("Eye Pain")) details += "Eye Pain: May be linked to infection or strain. ";
+        if(checked.includes("Headache")) details += "Headache: Often associated with eye strain or vision issues. ";
+        if(checked.includes("Dry Eyes")) details += "Dry Eyes: Common with prolonged screen time or aging. ";
+
+        symptomResult.textContent = details + " We recommend booking an appointment with our specialists.";
+        symptomResult.style.color = "darkred";
+        alert(details + "\nPlease seek an appointment with our doctors.");
       }
     });
 
-    // Vision Tips Rotator
+    // AI Diagnostics Demo logic
+    const aiForm = document.getElementById('ai-form');
+    const aiResult = document.getElementById('ai-result');
+    aiForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const value = document.getElementById('symptom-select').value;
+      let advice = "";
+      switch(value) {
+        case "blurry":
+          advice = "AI Suggests: Possible refractive error or cataract. Please book a detailed eye exam.";
+          break;
+        case "pain":
+          advice = "AI Suggests: Could be eye strain or infection. Avoid rubbing eyes and consult immediately.";
+          break;
+        case "headache":
+          advice = "AI Suggests: Might be vision strain. Limit screen time and schedule a check-up.";
+          break;
+        case "dry":
+          advice = "AI Suggests: Likely dry eye syndrome. Use lubricating drops and reduce screen glare.";
+          break;
+        default:
+          advice = "Please select a symptom to analyze.";
+      }
+      aiResult.textContent = advice;
+    });
+
+    // Vision Tips Rotator with Popup Suggestion
     const tips = [
       "Rest your eyes every 20 minutes when using screens.",
       "Eat foods rich in Vitamin A for healthy vision.",
@@ -332,7 +379,11 @@
     let tipIndex = 0;
     const tipBox = document.getElementById('tip-box');
     function showTip() {
-      tipBox.textContent = tips[tipIndex];
+      const currentTip = tips[tipIndex];
+      tipBox.textContent = currentTip;
+      if(Math.random() < 0.3) { // occasionally show popup
+        alert("Vision Tip: " + currentTip);
+      }
       tipIndex = (tipIndex + 1) % tips.length;
     }
     showTip();
