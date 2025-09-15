@@ -51,12 +51,15 @@
       display: none;
       flex-direction: column;
       cursor: pointer;
+      background: transparent;
+      border: none;
     }
     .menu-toggle span {
       background: white;
       height: 3px;
       width: 25px;
       margin: 4px 0;
+      display: block;
     }
     @media (max-width: 768px) {
       nav {
@@ -115,7 +118,7 @@
       max-width: 1200px;
       margin: auto;
     }
-    .services, .why-choose, .pricing, .testimonials, .doctors, .innovations {
+    .services, .why-choose, .pricing, .testimonials, .doctors, .innovations, .symptom-checker, .vision-tips {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5rem;
@@ -168,11 +171,11 @@
 <body>
   <header>
     <h1>Karshni Eye Care <a href="patient.html" class="admin-btn">Admin</a></h1>
-    <div class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('active')">
+    <button class="menu-toggle" aria-label="Toggle Menu" onclick="document.querySelector('nav').classList.toggle('active')">
       <span></span>
       <span></span>
       <span></span>
-    </div>
+    </button>
     <nav>
       <a href="#home">Home</a>
       <a href="#about">About</a>
@@ -183,6 +186,8 @@
       <a href="#testimonials">Testimonials</a>
       <a href="#appointment">Appointment</a>
       <a href="#innovations">Innovations</a>
+      <a href="#vision-tips">Vision Tips</a>
+      <a href="#symptom">Symptom Checker</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -264,6 +269,23 @@
     </div>
   </section>
 
+  <section id="vision-tips" class="section">
+    <h2>Vision Tips</h2>
+    <div class="card" id="tip-box">Loading daily eye-care tip...</div>
+  </section>
+
+  <section id="symptom" class="section">
+    <h2>Symptom Checker</h2>
+    <form id="symptom-form">
+      <label><input type="checkbox" value="Blurry Vision"> Blurry Vision</label>
+      <label><input type="checkbox" value="Eye Pain"> Eye Pain</label>
+      <label><input type="checkbox" value="Headache"> Headache</label>
+      <label><input type="checkbox" value="Dry Eyes"> Dry Eyes</label>
+      <button type="submit">Check Symptoms</button>
+    </form>
+    <div id="symptom-result" style="margin-top:1rem; font-weight:bold;"></div>
+  </section>
+
   <section id="contact" class="section">
     <h2>Contact Us</h2>
     <p>Email: info@karshnieyecare.com | Phone: +91-9876543210</p>
@@ -281,6 +303,40 @@
       alert('Appointment submitted successfully!');
       form.reset();
     });
+
+    const symptomForm = document.getElementById('symptom-form');
+    const symptomResult = document.getElementById('symptom-result');
+    symptomForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const checked = Array.from(symptomForm.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
+      if(checked.length === 0) {
+        symptomResult.textContent = "Please select at least one symptom.";
+        symptomResult.style.color = "red";
+      } else if(checked.includes("Blurry Vision") || checked.includes("Eye Pain")) {
+        symptomResult.textContent = "You should consider a detailed eye check-up soon.";
+        symptomResult.style.color = "darkred";
+      } else {
+        symptomResult.textContent = "Your symptoms seem mild, but consult a doctor if they persist.";
+        symptomResult.style.color = "green";
+      }
+    });
+
+    // Vision Tips Rotator
+    const tips = [
+      "Rest your eyes every 20 minutes when using screens.",
+      "Eat foods rich in Vitamin A for healthy vision.",
+      "Wear sunglasses to protect from UV rays.",
+      "Stay hydrated to reduce dry eyes.",
+      "Get regular eye check-ups every year."
+    ];
+    let tipIndex = 0;
+    const tipBox = document.getElementById('tip-box');
+    function showTip() {
+      tipBox.textContent = tips[tipIndex];
+      tipIndex = (tipIndex + 1) % tips.length;
+    }
+    showTip();
+    setInterval(showTip, 5000);
   </script>
 </body>
 </html>
