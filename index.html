@@ -19,6 +19,7 @@
       justify-content: space-between;
       align-items: center;
       position: relative;
+      z-index: 1000;
     }
     header h1 {
       margin: 0;
@@ -53,6 +54,7 @@
       cursor: pointer;
       background: transparent;
       border: none;
+      z-index: 1001;
     }
     .menu-toggle span {
       background: white;
@@ -70,6 +72,7 @@
         left: 0;
         background: #0a5fa3;
         width: 100%;
+        z-index: 1000;
       }
       nav a {
         margin: 1rem;
@@ -79,7 +82,12 @@
       }
       nav.active {
         display: flex;
+        animation: slideDown 0.3s ease;
       }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .hero {
       background: url('images/hero.jpg') center/cover no-repeat;
@@ -112,6 +120,8 @@
       text-decoration: none;
       border-radius: 5px;
       font-weight: bold;
+      position: relative;
+      z-index: 1;
     }
     .section {
       padding: 3rem 2rem;
@@ -200,6 +210,7 @@
     </div>
   </section>
 
+  <!-- All original sections restored -->
   <section id="about" class="section">
     <h2>About Us</h2>
     <p>Karshni Eye Care is dedicated to providing world-class eye care services with modern facilities and expert doctors.</p>
@@ -315,60 +326,63 @@
 
   <script>
     const form = document.getElementById('appointment-form');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      alert('Appointment submitted successfully!');
-      form.reset();
-    });
+    if(form){
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        alert('Appointment submitted successfully!');
+        form.reset();
+      });
+    }
 
     const symptomForm = document.getElementById('symptom-form');
     const symptomResult = document.getElementById('symptom-result');
-    symptomForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const checked = Array.from(symptomForm.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
-      if(checked.length === 0) {
-        symptomResult.textContent = "Please select at least one symptom.";
-        symptomResult.style.color = "red";
-      } else {
-        let details = "";
-        if(checked.includes("Blurry Vision")) details += "Blurry Vision: Could indicate refractive errors or cataracts. ";
-        if(checked.includes("Eye Pain")) details += "Eye Pain: May be linked to infection or strain. ";
-        if(checked.includes("Headache")) details += "Headache: Often associated with eye strain or vision issues. ";
-        if(checked.includes("Dry Eyes")) details += "Dry Eyes: Common with prolonged screen time or aging. ";
+    if(symptomForm){
+      symptomForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const checked = Array.from(symptomForm.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
+        if(checked.length === 0) {
+          symptomResult.textContent = "Please select at least one symptom.";
+          symptomResult.style.color = "red";
+        } else {
+          let details = "";
+          if(checked.includes("Blurry Vision")) details += "Blurry Vision: Could indicate refractive errors or cataracts. ";
+          if(checked.includes("Eye Pain")) details += "Eye Pain: May be linked to infection or strain. ";
+          if(checked.includes("Headache")) details += "Headache: Often associated with eye strain or vision issues. ";
+          if(checked.includes("Dry Eyes")) details += "Dry Eyes: Common with prolonged screen time or aging. ";
 
-        symptomResult.textContent = details + " We recommend booking an appointment with our specialists.";
-        symptomResult.style.color = "darkred";
-        alert(details + "\nPlease seek an appointment with our doctors.");
-      }
-    });
+          symptomResult.textContent = details + " We recommend booking an appointment with our specialists.";
+          symptomResult.style.color = "darkred";
+        }
+      });
+    }
 
-    // AI Diagnostics Demo logic
     const aiForm = document.getElementById('ai-form');
     const aiResult = document.getElementById('ai-result');
-    aiForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const value = document.getElementById('symptom-select').value;
-      let advice = "";
-      switch(value) {
-        case "blurry":
-          advice = "AI Suggests: Possible refractive error or cataract. Please book a detailed eye exam.";
-          break;
-        case "pain":
-          advice = "AI Suggests: Could be eye strain or infection. Avoid rubbing eyes and consult immediately.";
-          break;
-        case "headache":
-          advice = "AI Suggests: Might be vision strain. Limit screen time and schedule a check-up.";
-          break;
-        case "dry":
-          advice = "AI Suggests: Likely dry eye syndrome. Use lubricating drops and reduce screen glare.";
-          break;
-        default:
-          advice = "Please select a symptom to analyze.";
-      }
-      aiResult.textContent = advice;
-    });
+    if(aiForm){
+      aiForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const value = document.getElementById('symptom-select').value;
+        let advice = "";
+        switch(value) {
+          case "blurry":
+            advice = "AI Suggests: Possible refractive error or cataract. Please book a detailed eye exam.";
+            break;
+          case "pain":
+            advice = "AI Suggests: Could be eye strain or infection. Avoid rubbing eyes and consult immediately.";
+            break;
+          case "headache":
+            advice = "AI Suggests: Might be vision strain. Limit screen time and schedule a check-up.";
+            break;
+          case "dry":
+            advice = "AI Suggests: Likely dry eye syndrome. Use lubricating drops and reduce screen glare.";
+            break;
+          default:
+            advice = "Please select a symptom to analyze.";
+        }
+        aiResult.textContent = advice;
+      });
+    }
 
-    // Vision Tips Rotator with Popup Suggestion
     const tips = [
       "Rest your eyes every 20 minutes when using screens.",
       "Eat foods rich in Vitamin A for healthy vision.",
@@ -379,11 +393,7 @@
     let tipIndex = 0;
     const tipBox = document.getElementById('tip-box');
     function showTip() {
-      const currentTip = tips[tipIndex];
-      tipBox.textContent = currentTip;
-      if(Math.random() < 0.3) { // occasionally show popup
-        alert("Vision Tip: " + currentTip);
-      }
+      tipBox.textContent = tips[tipIndex];
       tipIndex = (tipIndex + 1) % tips.length;
     }
     showTip();
