@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Karshni Eye Care - Modern Proposal</title>
   <style>
+    :root{
+      --brand:#0a5fa3;
+      --accent:#ffcc00;
+      --white:#fff;
+    }
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -12,14 +17,14 @@
       color: #333;
     }
     header {
-      background: #0a5fa3;
+      background: var(--brand);
       color: white;
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: relative;
-      z-index: 2000; /* ensure header above hero */
+      z-index: 2000;
     }
     header h1 {
       margin: 0;
@@ -30,176 +35,85 @@
     header h1 a.admin-btn {
       font-size: 0.8rem;
       margin-left: 1rem;
-      background: #ffcc00;
+      background: var(--accent);
       color: #000;
       padding: 4px 8px;
       border-radius: 4px;
       text-decoration: none;
     }
-    nav {
-      display: flex;
+
+    /* NAV STRUCTURE: - .nav-grid used for tablet+ and desktop (desktop shows two rows) - .nav-list used for mobile/hamburger */
+    nav{ display:block; }
+    nav a{ color: white; text-decoration: none; }
+
+    .menu-toggle{
+      display:flex; /* mobile-first visible */
+      flex-direction:column; cursor:pointer; background:transparent; border:none; z-index:2100;
     }
-    nav a {
-      color: white;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      background: transparent;
-      border: none;
-      z-index: 2100;
-    }
-    .menu-toggle span {
-      background: white;
-      height: 3px;
-      width: 25px;
-      margin: 4px 0;
-      display: block;
-    }
-    @media (max-width: 768px) {
-      nav {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: #0a5fa3;
-        width: 100%;
-        z-index: 3000; /* higher than hero button */
-        padding-bottom: 1rem;
-      }
-      nav a {
-        margin: 1rem;
-      }
-      .menu-toggle {
-        display: flex;
-      }
-      nav.active {
-        display: flex;
-        animation: slideDown 0.28s ease;
-      }
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .hero {
-      background: url('images/hero.jpg') center/cover no-repeat;
-      height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-      position: relative;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-    .hero-content h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    .hero-content a {
-      background: #ffcc00;
-      padding: 0.75rem 1.5rem;
-      color: #000;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      position: relative;
-      z-index: 1;
-    }
-    .section {
-      padding: 3rem 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-    .services, .why-choose, .pricing, .testimonials, .doctors, .innovations, .symptom-checker, .vision-tips, .ai-diagnostics {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    .card {
-      background: white;
-      padding: 1.25rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .card h3 {
-      margin-top: 0;
-      color: #0a5fa3;
-      font-size: 1.1rem;
-    }
-    .why-choose .card {
-      border-left: 4px solid #0a5fa3;
-      text-align: left;
-    }
-    .pricing .card {
-      border-top: 4px solid #0a5fa3;
-    }
-    .pricing .price {
-      font-size: 1.4rem;
-      color: #0a5fa3;
-      margin: 1rem 0;
-    }
-    .testimonials .card {
-      font-style: italic;
-    }
-    footer {
-      background: #0a5fa3;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-    form label, form input, form button, form select, form textarea {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    form input, form button, form select, form textarea {
-      padding: 0.5rem;
-      width: 100%;
-      max-width: 500px;
+    .menu-toggle span{ background:white; height:3px; width:25px; margin:4px 0; display:block }
+
+    /* desktop/tablet grid (hidden on mobile) */
+    .nav-grid{ display:none; }
+    .nav-grid a{ margin:0 0.8rem; font-weight:500 }
+
+    /* mobile list (hidden except when nav.active) */
+    .nav-list{ display:none; flex-direction:column; gap:0.6rem; padding:1rem 0 }
+    .nav-list a{ padding:0.6rem 1.2rem }
+
+    /* hover effect */
+    nav a:hover{ text-decoration:underline; color: var(--accent); }
+
+    @media (min-width:769px){
+      /* tablet: single-line centered */
+      .menu-toggle{ display:none }
+      .nav-list{ display:none }
+      .nav-grid{ display:flex; gap:1rem; justify-content:center; align-items:center; flex-wrap:nowrap }
+      .nav-grid a{ padding:0.3rem 0.6rem; white-space:nowrap }
     }
 
-    /* Contact improved layout */
-    .contact-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      align-items: flex-start;
+    @media (min-width:1024px){
+      /* desktop: split into two centered rows with divider */
+      .nav-grid{ display:block; text-align:center }
+      .nav-grid .nav-row{ display:flex; justify-content:center; gap:2rem; padding:0.25rem 0 }
+      .nav-grid .nav-row.top a{ font-weight:700 }
+      .nav-grid .nav-row.bottom{ border-top:1px solid rgba(255,255,255,0.08); margin-top:0.5rem; padding-top:0.9rem }
+      .nav-grid .nav-row.bottom a{ font-weight:500; opacity:0.95 }
     }
-    .contact-info {
-      background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(10,95,163,0.08);
+
+    /* mobile: when hamburger active, show nav-list */
+    nav.active .nav-list{ display:flex; position:absolute; top:100%; left:0; right:0; background:var(--brand); z-index:3000; }
+
+    .hero{
+      background: url('images/hero.jpg') center/cover no-repeat;
+      height:60vh; display:flex; align-items:center; justify-content:center; color:var(--white); text-align:center; position:relative;
     }
-    .contact-info h3 { color:#0a5fa3; margin-top:0 }
-    .contact-form {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    }
-    .contact-row { display:flex; gap:1rem; }
+    .hero::after{ content:""; position:absolute; inset:0; background:rgba(0,0,0,0.45); }
+    .hero-content{ position:relative; z-index:1 }
+    .hero-content h2{ font-size:2.4rem; margin-bottom:1rem }
+    .hero-content a{ background:var(--accent); color:#000; padding:0.75rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:600 }
+
+    .section{ padding:3rem 2rem; max-width:1200px; margin:auto }
+
+    .services, .why-choose, .pricing, .testimonials, .doctors, .innovations, .symptom-checker, .vision-tips, .ai-diagnostics{ display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem }
+    .card{ background:#fff; padding:1.25rem; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.08); text-align:center }
+    .card h3{ margin-top:0; color:var(--brand); font-size:1.1rem }
+    .why-choose .card{ border-left:4px solid var(--brand); text-align:left }
+    .pricing .card{ border-top:4px solid var(--brand) }
+    .pricing .price{ font-size:1.4rem; color:var(--brand); margin:1rem 0 }
+    .testimonials .card{ font-style:italic }
+
+    form label, form input, form button, form select, form textarea{ display:block; margin-bottom:0.5rem }
+    form input, form button, form select, form textarea{ padding:0.5rem; width:100%; max-width:500px }
+
+    /* Contact improved */
+    .contact-container{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:2rem; align-items:flex-start }
+    .contact-info{ background:linear-gradient(180deg,#fff 0%,#f6fbff 100%); padding:1.5rem; border-radius:10px; box-shadow:0 6px 18px rgba(10,95,163,0.08) }
+    .contact-info h3{ color:var(--brand); margin-top:0 }
+    .contact-form{ background:#fff; padding:1.5rem; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06) }
+    .contact-row{ display:flex; gap:1rem }
     @media (max-width:600px){ .contact-row{ flex-direction:column } }
+
+    footer{ background:var(--brand); color:#fff; text-align:center; padding:1rem }
   </style>
 </head>
 <body>
@@ -210,20 +124,47 @@
       <span></span>
       <span></span>
     </button>
+
     <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#why">Why Choose Us</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#doctors">Doctors</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#appointment">Appointment</a>
-      <a href="#innovations">Innovations</a>
-      <a href="#ai-diagnostics">AI Diagnostics</a>
-      <a href="#vision-tips">Vision Tips</a>
-      <a href="#symptom">Symptom Checker</a>
-      <a href="#contact">Contact</a>
+      <!-- Desktop & tablet grid (desktop: two rows, tablet: single centered line) -->
+      <div class="nav-grid" aria-hidden="true">
+        <div class="nav-row top">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#why">Why Choose Us</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#doctors">Doctors</a>
+        </div>
+        <div class="nav-row bottom">
+          <a href="#testimonials">Testimonials</a>
+          <a href="#appointment">Appointment</a>
+          <a href="#innovations">Innovations</a>
+          <a href="#ai-diagnostics">AI Diagnostics</a>
+          <a href="#vision-tips">Vision Tips</a>
+          <a href="#symptom">Symptom Checker</a>
+          <a href="blog.html">Blog</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <!-- Mobile list (used when hamburger is toggled) -->
+      <div class="nav-list" aria-hidden="true">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#why">Why Choose Us</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#appointment">Appointment</a>
+        <a href="#innovations">Innovations</a>
+        <a href="#ai-diagnostics">AI Diagnostics</a>
+        <a href="#vision-tips">Vision Tips</a>
+        <a href="#symptom">Symptom Checker</a>
+        <a href="blog.html">Blog</a>
+        <a href="#contact">Contact</a>
+      </div>
     </nav>
   </header>
 
@@ -372,12 +313,28 @@
     </div>
   </section>
 
+  <section id="faq" class="section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq">
+      <div class="card"><h3>Do I need an appointment for an eye check-up?</h3><p>We recommend booking an appointment to avoid waiting, but walk-ins are also welcome.</p></div>
+      <div class="card"><h3>How often should I get my eyes tested?</h3><p>Once a year is ideal for most people, but more frequent check-ups may be required for certain conditions.</p></div>
+      <div class="card"><h3>Do you offer cashless insurance facilities?</h3><p>Yes, we tie up with major health insurers for cashless treatments.</p></div>
+    </div>
+  </section>
+
   <footer>
     <p>&copy; 2025 Karshni Eye Care. All rights reserved.</p>
   </footer>
 
   <script>
-    // appointment form
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.menu-toggle');
+    const navEl = document.querySelector('nav');
+    if(menuBtn){
+      menuBtn.addEventListener('click', ()=>{ navEl.classList.toggle('active'); });
+    }
+
+    // Appointment form logic
     const form = document.getElementById('appointment-form');
     if(form){
       form.addEventListener('submit', e => {
@@ -387,7 +344,7 @@
       });
     }
 
-    // contact form
+    // Contact form
     const contactForm = document.getElementById('contact-form');
     if(contactForm){
       contactForm.addEventListener('submit', e => {
@@ -397,7 +354,7 @@
       });
     }
 
-    // symptom checker
+    // Symptom checker
     const symptomForm = document.getElementById('symptom-form');
     const symptomResult = document.getElementById('symptom-result');
     if(symptomForm){
