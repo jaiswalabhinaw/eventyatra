@@ -19,7 +19,7 @@
       justify-content: space-between;
       align-items: center;
       position: relative;
-      z-index: 1000;
+      z-index: 2000; /* ensure header above hero */
     }
     header h1 {
       margin: 0;
@@ -54,7 +54,7 @@
       cursor: pointer;
       background: transparent;
       border: none;
-      z-index: 1001;
+      z-index: 2100;
     }
     .menu-toggle span {
       background: white;
@@ -72,7 +72,8 @@
         left: 0;
         background: #0a5fa3;
         width: 100%;
-        z-index: 1000;
+        z-index: 3000; /* higher than hero button */
+        padding-bottom: 1rem;
       }
       nav a {
         margin: 1rem;
@@ -82,11 +83,11 @@
       }
       nav.active {
         display: flex;
-        animation: slideDown 0.3s ease;
+        animation: slideDown 0.28s ease;
       }
     }
     @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
+      from { opacity: 0; transform: translateY(-8px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .hero {
@@ -167,15 +168,38 @@
       padding: 1rem;
       margin-top: 2rem;
     }
-    form label, form input, form button, form select {
+    form label, form input, form button, form select, form textarea {
       display: block;
       margin-bottom: 0.5rem;
     }
-    form input, form button, form select {
+    form input, form button, form select, form textarea {
       padding: 0.5rem;
       width: 100%;
-      max-width: 400px;
+      max-width: 500px;
     }
+
+    /* Contact improved layout */
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .contact-info {
+      background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(10,95,163,0.08);
+    }
+    .contact-info h3 { color:#0a5fa3; margin-top:0 }
+    .contact-form {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+    .contact-row { display:flex; gap:1rem; }
+    @media (max-width:600px){ .contact-row{ flex-direction:column } }
   </style>
 </head>
 <body>
@@ -210,7 +234,6 @@
     </div>
   </section>
 
-  <!-- All original sections restored -->
   <section id="about" class="section">
     <h2>About Us</h2>
     <p>Karshni Eye Care is dedicated to providing world-class eye care services with modern facilities and expert doctors.</p>
@@ -316,8 +339,37 @@
 
   <section id="contact" class="section">
     <h2>Contact Us</h2>
-    <p>Email: info@karshnieyecare.com | Phone: +91-9876543210</p>
-    <p>Address: 123 Vision Street, Lucknow, India</p>
+    <div class="contact-container">
+      <div class="contact-info">
+        <h3>Get in Touch</h3>
+        <p><strong>Email:</strong> info@karshnieyecare.com</p>
+        <p><strong>Phone:</strong> +91-9876543210</p>
+        <p><strong>Address:</strong> 123 Vision Street, Lucknow, India</p>
+        <div style="margin-top:1rem">
+          <p><strong>Opening Hours</strong></p>
+          <p>Mon - Sat: 9:00 AM - 6:00 PM</p>
+          <p>Sunday: Closed</p>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Send us a Message</h3>
+        <form id="contact-form">
+          <div class="contact-row">
+            <div style="flex:1">
+              <label for="cname">Name</label>
+              <input type="text" id="cname" required>
+            </div>
+            <div style="flex:1">
+              <label for="cemail">Email</label>
+              <input type="email" id="cemail" required>
+            </div>
+          </div>
+          <label for="cmessage">Message</label>
+          <textarea id="cmessage" rows="4" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
   </section>
 
   <footer>
@@ -325,6 +377,7 @@
   </footer>
 
   <script>
+    // appointment form
     const form = document.getElementById('appointment-form');
     if(form){
       form.addEventListener('submit', e => {
@@ -334,6 +387,17 @@
       });
     }
 
+    // contact form
+    const contactForm = document.getElementById('contact-form');
+    if(contactForm){
+      contactForm.addEventListener('submit', e => {
+        e.preventDefault();
+        alert('Your message has been sent!');
+        contactForm.reset();
+      });
+    }
+
+    // symptom checker
     const symptomForm = document.getElementById('symptom-form');
     const symptomResult = document.getElementById('symptom-result');
     if(symptomForm){
@@ -352,10 +416,12 @@
 
           symptomResult.textContent = details + " We recommend booking an appointment with our specialists.";
           symptomResult.style.color = "darkred";
+          alert(details + "\nPlease seek an appointment with our doctors.");
         }
       });
     }
 
+    // AI Diagnostics
     const aiForm = document.getElementById('ai-form');
     const aiResult = document.getElementById('ai-result');
     if(aiForm){
@@ -383,6 +449,7 @@
       });
     }
 
+    // Vision Tips rotator (no popups)
     const tips = [
       "Rest your eyes every 20 minutes when using screens.",
       "Eat foods rich in Vitamin A for healthy vision.",
@@ -393,7 +460,7 @@
     let tipIndex = 0;
     const tipBox = document.getElementById('tip-box');
     function showTip() {
-      tipBox.textContent = tips[tipIndex];
+      if(tipBox) tipBox.textContent = tips[tipIndex];
       tipIndex = (tipIndex + 1) % tips.length;
     }
     showTip();
