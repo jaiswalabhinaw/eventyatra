@@ -24,11 +24,9 @@
     h1{ margin:0; font-size:1.25rem; display:flex; align-items:center; gap:0.6rem }
     .admin-btn{ font-size:0.8rem; background:var(--accent); color:#000; padding:4px 8px; border-radius:6px; text-decoration:none }
 
-    /* navigation structures */
     .menu-toggle{ display:flex; flex-direction:column; gap:4px; background:transparent; border:0; cursor:pointer; padding:6px }
     .menu-toggle span{ width:24px; height:3px; background:var(--white); display:block }
 
-    /* Desktop: two rows nav-grid (hidden on mobile) */
     .nav-grid{ display:none }
     .nav-grid .nav-row{ display:flex; justify-content:center; gap:1.75rem; align-items:center }
     .nav-grid .nav-row.top a{ font-weight:700 }
@@ -36,7 +34,6 @@
     .nav-grid a{ color:var(--white); text-decoration:none }
     .nav-grid a:hover{ color:var(--accent); text-decoration:underline }
 
-    /* Mobile list (hidden except when nav active) */
     .nav-list{ display:none; flex-direction:column; gap:0.5rem; padding:0.5rem 0 }
     .nav-list a{ color:var(--white); padding:0.7rem 1rem; text-decoration:none }
     .nav-list a:hover{ color:var(--accent) }
@@ -47,8 +44,6 @@
     }
 
     @media(max-width:768px){
-      .header-inner{ align-items:center }
-      .nav-list{ display:none }
       nav.active .nav-list{ display:flex; position:absolute; left:0; right:0; top:100%; background:var(--brand); z-index:3000 }
     }
 
@@ -70,7 +65,6 @@
     form label, form input, form button, form select, form textarea{ display:block; margin-bottom:0.5rem }
     form input, form button, form select, form textarea{ padding:0.55rem; width:100%; max-width:500px }
 
-    /* contact */
     .contact-container{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem }
     .contact-info{ background:linear-gradient(180deg,#fff,#f6fbff); padding:1.25rem; border-radius:10px }
     .contact-form{ background:#fff; padding:1.25rem; border-radius:10px }
@@ -82,14 +76,13 @@
   <header>
     <div class="header-inner">
       <h1>Karshni Eye Care <a class="admin-btn" href="patient.html">Admin</a></h1>
-
-      <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('nav').classList.toggle('active')">
-        <span></span><span></span><span></span>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
-
       <nav>
-        <!-- Desktop two-row grid (visible >=769px) -->
-        <div class="nav-grid" aria-hidden="false">
+        <div class="nav-grid">
           <div class="nav-row top">
             <a href="#home">Home</a>
             <a href="#about">About</a>
@@ -110,8 +103,6 @@
             <a href="#contact">Contact</a>
           </div>
         </div>
-
-        <!-- Mobile list (shown when nav.active) -->
         <div class="nav-list">
           <a href="#home">Home</a>
           <a href="#about">About</a>
@@ -292,14 +283,12 @@
   </footer>
 
   <script>
-    // Mobile menu toggle
-    const menuBtn = document.querySelector('.menu-toggle');
-    const navEl = document.querySelector('nav');
-    if(menuBtn){
-      menuBtn.addEventListener('click', ()=>{ navEl.classList.toggle('active'); });
-    }
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
 
-    // Appointment form
     const form = document.getElementById('appointment-form');
     if(form){
       form.addEventListener('submit', e => {
@@ -309,7 +298,6 @@
       });
     }
 
-    // Contact form
     const contactForm = document.getElementById('contact-form');
     if(contactForm){
       contactForm.addEventListener('submit', e => {
@@ -318,75 +306,3 @@
         contactForm.reset();
       });
     }
-
-    // Symptom checker
-    const symptomForm = document.getElementById('symptom-form');
-    const symptomResult = document.getElementById('symptom-result');
-    if(symptomForm){
-      symptomForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const checked = Array.from(symptomForm.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
-        if(checked.length === 0) {
-          symptomResult.textContent = "Please select at least one symptom.";
-          symptomResult.style.color = "red";
-        } else {
-          let details = "";
-          if(checked.includes("Blurry Vision")) details += "Blurry Vision: Could indicate refractive errors or cataracts. ";
-          if(checked.includes("Eye Pain")) details += "Eye Pain: May be linked to infection or strain. ";
-          if(checked.includes("Headache")) details += "Headache: Often associated with eye strain or vision issues. ";
-          if(checked.includes("Dry Eyes")) details += "Dry Eyes: Common with prolonged screen time or aging. ";
-
-          symptomResult.textContent = details + " We recommend booking an appointment with our specialists.";
-          symptomResult.style.color = "darkred";
-          alert(details + "\nPlease seek an appointment with our doctors.");
-        }
-      });
-    }
-
-    // AI Diagnostics
-    const aiForm = document.getElementById('ai-form');
-    const aiResult = document.getElementById('ai-result');
-    if(aiForm){
-      aiForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const value = document.getElementById('symptom-select').value;
-        let advice = "";
-        switch(value) {
-          case "blurry":
-            advice = "AI Suggests: Possible refractive error or cataract. Please book a detailed eye exam.";
-            break;
-          case "pain":
-            advice = "AI Suggests: Could be eye strain or infection. Avoid rubbing eyes and consult immediately.";
-            break;
-          case "headache":
-            advice = "AI Suggests: Might be vision strain. Limit screen time and schedule a check-up.";
-            break;
-          case "dry":
-            advice = "AI Suggests: Likely dry eye syndrome. Use lubricating drops and reduce screen glare.";
-            break;
-          default:
-            advice = "Please select a symptom to analyze.";
-        }
-        aiResult.textContent = advice;
-      });
-    }
-
-    // Vision Tips rotator (no popups)
-    const tips = [
-      "Rest your eyes every 20 minutes when using screens.",
-      "Eat foods rich in Vitamin A for healthy vision.",
-      "Wear sunglasses to protect from UV rays.",
-      "Stay hydrated to reduce dry eyes.",
-      "Get regular eye check-ups every year."
-    ];
-    let tipIndex = 0;
-    const tipBox = document.getElementById('tip-box');
-    function showTip() {
-      if(tipBox) tipBox.textContent = tips[tipIndex];
-      tipIndex = (tipIndex + 1) % tips.length;
-    }
-    showTip();
-    setInterval(showTip, 5000);
-  </script>
-</body>
-</html>
