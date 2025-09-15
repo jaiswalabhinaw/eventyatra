@@ -1,264 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVENTYATRA - Corporate Event & Travel Management</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
-        }
-        .text-green-800 {
-            color: #166534;
-        }
-        .bg-green-600 {
-            background-color: #15803d;
-        }
-        .hover\:bg-green-700:hover {
-            background-color: #16a34a;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karshni Eye Care - Modern Proposal</title>
+  <style>
+    :root { --brand:#0a5fa3; --accent:#ffcc00; --white:#fff; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Segoe UI', Tahoma, sans-serif; background:#f9f9f9; color:#333; padding-top:70px; }
+    header { background:var(--brand); color:var(--white); position:fixed; top:0; left:0; right:0; z-index:2000; padding:0.9rem 1.25rem; }
+    .header-inner { display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:auto; }
+    h1 { margin:0; font-size:1.25rem; display:flex; align-items:center; gap:0.6rem; }
+    .admin-btn { font-size:0.8rem; background:var(--accent); color:#000; padding:4px 8px; border-radius:6px; text-decoration:none; }
+    .menu-toggle { display:flex; flex-direction:column; gap:4px; background:transparent; border:0; cursor:pointer; padding:6px; }
+    .menu-toggle span { width:24px; height:3px; background:var(--white); display:block; }
+    nav { position: relative; }
+    .nav-list { display:none; flex-direction:column; gap:0.5rem; padding:0.5rem 0; }
+    .nav-list a { color:var(--white); padding:0.7rem 1rem; text-decoration:none; }
+    .nav-list a:hover { color:var(--accent); }
+    @media(min-width:769px) { .menu-toggle { display:none; } .nav-list { display:flex; flex-direction:row; gap:1rem; padding:0; } }
+    @media(max-width:768px) { nav.active .nav-list { display:flex; position:absolute; left:0; right:0; top:100%; background:var(--brand); z-index:3000; } }
+    .hero { background:url('images/hero.jpg') center/cover no-repeat; height:60vh; display:flex; align-items:center; justify-content:center; position:relative; }
+    .hero::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.45); }
+    .hero-content { position:relative; z-index:1; text-align:center; color:var(--white); }
+    .hero-content h2 { font-size:2.4rem; margin:0 0 0.8rem 0; }
+    .hero-content a { background:var(--accent); padding:0.6rem 1.25rem; color:#000; border-radius:6px; text-decoration:none; font-weight:600; }
+    .section { padding:3rem 1.25rem; max-width:1200px; margin:0 auto; }
+    .services, .why-choose, .pricing, .testimonials, .doctors, .innovations, .ai-diagnostics, .vision-tips, .symptom-checker, .contact-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.25rem; }
+    .card { background:#fff; padding:1.25rem; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); text-align:center; }
+    .card h3 { color:var(--brand); margin-top:0; }
+    .why-choose .card { text-align:left; border-left:4px solid var(--brand); }
+    .pricing .card { border-top:4px solid var(--brand); }
+    .pricing .price { color:var(--brand); font-size:1.25rem; margin:0.75rem 0; }
+    form label, form input, form button, form select, form textarea { display:block; margin-bottom:0.5rem; }
+    form input, form button, form select, form textarea { padding:0.55rem; width:100%; max-width:500px; }
+    .contact-info { background:linear-gradient(180deg,#fff,#f6fbff); padding:1.25rem; border-radius:10px; }
+    .contact-form { background:#fff; padding:1.25rem; border-radius:10px; }
+    footer { background:var(--brand); color:var(--white); text-align:center; padding:1rem; margin-top:2rem; }
+  </style>
 </head>
-<body class="text-gray-800">
-
-    <!-- Header -->
-    <header class="bg-white shadow-lg fixed w-full z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-3xl font-bold text-green-800 tracking-wide">EVENTYATRA</a>
-            <div class="hidden md:flex space-x-8 text-gray-600 font-medium">
-                <a href="#home" class="hover:text-green-600 transition duration-300">Home</a>
-                <a href="#events" class="hover:text-green-600 transition duration-300">Corporate Events</a>
-                <a href="#travel" class="hover:text-green-600 transition duration-300">Professional Travel</a>
-                <a href="#proposal" class="hover:text-green-600 transition duration-300">AI Proposal</a>
-                <a href="#contact" class="hover:text-green-600 transition duration-300">Contact</a>
-            </div>
-            <button id="mobile-menu-button" class="md:hidden text-gray-600 focus:outline-none">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
-        </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-            <a href="#home" class="block py-2 px-6 text-gray-600 hover:bg-gray-100 transition duration-300">Home</a>
-            <a href="#events" class="block py-2 px-6 text-gray-600 hover:bg-gray-100 transition duration-300">Corporate Events</a>
-            <a href="#travel" class="block py-2 px-6 text-gray-600 hover:bg-gray-100 transition duration-300">Professional Travel</a>
-            <a href="#proposal" class="block py-2 px-6 text-gray-600 hover:bg-gray-100 transition duration-300">AI Proposal</a>
-            <a href="#contact" class="block py-2 px-6 text-gray-600 hover:bg-gray-100 transition duration-300">Contact</a>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>Karshni Eye Care <a href="patient.html" class="admin-btn">Admin</a></h1>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav>
+        <div class="nav-list">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#why">Why Choose Us</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#doctors">Doctors</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#appointment">Book Appointment</a>
+          <a href="#innovations">Innovations</a>
+          <a href="#ai-diagnostics">AI Diagnostics</a>
+          <a href="#vision-tips">Vision Tips</a>
+          <a href="#symptom">Symptom Checker</a>
+          <a href="#contact">Contact</a>
         </div>
-    </header>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="bg-white py-32 rounded-b-3xl shadow-lg relative overflow-hidden">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-4 tracking-tight text-green-800">Your Journey, Our Expertise</h1>
-                <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-600">
-                    We specialize in creating exceptional corporate events and seamless professional travel experiences, perfectly tailored to your business.
-                </p>
-                <a href="#contact" class="inline-block bg-green-600 text-white font-semibold py-3 px-8 rounded-full shadow-xl hover:bg-green-700 transform hover:scale-105 transition duration-300">
-                    Get a Quote Today
-                </a>
-            </div>
-        </section>
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h2>Clear Vision, Better Life</h2>
+      <a href="#appointment">Book Appointment</a>
+    </div>
+  </section>
 
-        <!-- Services Section -->
-        <section id="events" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
-                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                        From meticulous planning to flawless execution, we ensure every detail is handled with precision.
-                    </p>
-                </div>
+  <section id="about" class="section">
+    <h2>About Us</h2>
+    <p>Karshni Eye Care is dedicated to providing world-class eye care services with modern facilities and expert doctors.</p>
+  </section>
 
-                <!-- Corporate Events -->
-                <div class="flex flex-col md:flex-row items-center md:space-x-12 mb-20">
-                    <div class="md:w-1/2 mb-8 md:mb-0">
-                        <img src="image_e63d01.jpg" alt="Corporate Event Management" class="rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 w-full h-auto object-cover">
-                    </div>
-                    <div class="md:w-1/2">
-                        <h3 class="text-3xl font-bold text-green-800 mb-4">Corporate Event Management</h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed">
-                            We design, plan, and execute a wide range of corporate events, from large-scale conferences and product launches to intimate team-building retreats and annual general meetings. Our end-to-end service ensures every element is perfectly managed, creating a flawless and impactful experience.
-                        </p>
-                        <ul class="list-disc list-inside text-gray-600 space-y-2">
-                            <li>Conference & Seminar Planning</li>
-                            <li>Product Launch & Brand Activations</li>
-                            <li>Team-Building & Off-sites</li>
-                            <li>Gala Dinners & Award Ceremonies</li>
-                        </ul>
-                    </div>
-                </div>
+  <section id="services" class="section">
+    <h2>Our Services</h2>
+    <div class="services">
+      <div class="card"><h3>Comprehensive Eye Exams</h3><p>Detailed vision and eye health checkups.</p></div>
+      <div class="card"><h3>Cataract Surgery</h3><p>Advanced surgical solutions for cataracts.</p></div>
+      <div class="card"><h3>Laser Vision Correction</h3><p>Latest technology for clear, spectacle-free vision.</p></div>
+      <div class="card"><h3>Glaucoma Screening</h3><p>Early detection and treatment of glaucoma.</p></div>
+      <div class="card"><h3>Pediatric Eye Care</h3><p>Eye exams and treatment for children.</p></div>
+      <div class="card"><h3>Retina Services</h3><p>Specialized care for retinal disorders.</p></div>
+    </div>
+  </section>
 
-                <!-- Professional Travel -->
-                <div id="travel" class="flex flex-col md:flex-row-reverse items-center md:space-x-reverse md:space-x-12">
-                    <div class="md:w-1/2 mb-8 md:mb-0">
-                        <img src="image_e63580.jpg" alt="Professional Travel Management" class="rounded-2xl shadow-xl transform hover:scale-105 transition duration-300 w-full h-auto object-cover">
-                    </div>
-                    <div class="md:w-1/2">
-                        <h3 class="text-3xl font-bold text-green-800 mb-4">Professional Travel Management</h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed">
-                            For corporate professionals, business travel should be efficient and stress-free. We handle all aspects of travel logistics, including flight bookings, hotel reservations, ground transportation, and itinerary management, ensuring a seamless journey for your team.
-                        </p>
-                        <ul class="list-disc list-inside text-gray-600 space-y-2">
-                            <li>Business Travel Itineraries</li>
-                            <li>Group & MICE Travel</li>
-                            <li>VIP & Executive Concierge Services</li>
-                            <li>Travel Expense Management</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <section id="why" class="section">
+    <h2>Why Choose Us</h2>
+    <div class="why-choose">
+      <div class="card"><h3>Experienced Doctors</h3><p>Over 20 years of experience in ophthalmology.</p></div>
+      <div class="card"><h3>Modern Equipment</h3><p>State-of-the-art diagnostic and treatment tools.</p></div>
+      <div class="card"><h3>Patient-Centered Care</h3><p>We prioritize comfort, safety, and trust.</p></div>
+    </div>
+  </section>
 
-        <!-- AI Proposal Generator Section -->
-        <section id="proposal" class="py-20 bg-gray-100 rounded-2xl shadow-inner mx-auto max-w-5xl mb-12">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Generate an Instant Event Proposal</h2>
-                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-                    Tell us a little about your needs and get a preliminary event plan in seconds.
-                </p>
-                <div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-xl space-y-6">
-                    <div>
-                        <select id="event-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200">
-                            <option value="">Select Event Type</option>
-                            <option value="Conference">Conference</option>
-                            <option value="Team Building">Team Building</option>
-                            <option value="Product Launch">Product Launch</option>
-                            <option value="Executive Retreat">Executive Retreat</option>
-                        </select>
-                    </div>
-                    <div>
-                        <input type="number" id="attendees" placeholder="Number of Attendees" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200" required>
-                    </div>
-                    <div>
-                        <input type="text" id="location" placeholder="Preferred Location (e.g., Delhi, Goa)" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200" required>
-                    </div>
-                    <button onclick="generateProposal()" class="w-full bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transform hover:scale-105 transition duration-300">
-                        Generate Proposal
-                    </button>
-                    <div id="proposal-output" class="mt-8 text-left bg-gray-50 p-6 rounded-lg border border-gray-200 hidden">
-                        <!-- Proposal will be displayed here -->
-                    </div>
-                </div>
-            </div>
-        </section>
+  <section id="pricing" class="section">
+    <h2>Pricing</h2>
+    <div class="pricing">
+      <div class="card"><h3>Basic Consultation</h3><p class="price">₹500</p><p>Includes eye check-up and consultation.</p></div>
+      <div class="card"><h3>Advanced Testing</h3><p class="price">₹1500</p><p>Includes diagnostic tests and report.</p></div>
+      <div class="card"><h3>Surgical Package</h3><p class="price">₹20,000+</p><p>Includes surgery and post-care.</p></div>
+    </div>
+  </section>
 
-        <!-- Sustainability Section -->
-        <section class="py-20 bg-white">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Committed to Sustainability</h2>
-                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-                    We incorporate eco-friendly practices into our event and travel management services.
-                </p>
-                <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-16">
-                    <div class="text-center">
-                        <div class="text-5xl text-green-600 mb-4">🌱</div>
-                        <h3 class="text-xl font-semibold mb-2">Green Venues</h3>
-                        <p class="text-gray-600 max-w-xs">We partner with venues committed to reducing their environmental footprint.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-5xl text-green-600 mb-4">✈️</div>
-                        <h3 class="text-xl font-semibold mb-2">Carbon Neutral Travel</h3>
-                        <p class="text-gray-600 max-w-xs">Offering options to offset travel emissions for your professional trips.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-5xl text-green-600 mb-4">♻️</div>
-                        <h3 class="text-xl font-semibold mb-2">Waste Reduction</h3>
-                        <p class="text-gray-600 max-w-xs">Implementing smart strategies to minimize waste and promote recycling at events.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <section id="doctors" class="section">
+    <h2>Our Doctors</h2>
+    <div class="doctors">
+      <div class="card"><h3>Dr. A Sharma</h3><p>Senior Ophthalmologist with 25 years experience.</p></div>
+      <div class="card"><h3>Dr. P Verma</h3><p>Expert in laser and cataract surgery.</p></div>
+    </div>
+  </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 bg-gray-100">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Ready to Elevate Your Events?</h2>
-                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-                    Let's collaborate to create a memorable and successful experience. Fill out the form below or contact us directly.
-                </p>
-                <div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
-                    <form action="#" method="POST" class="space-y-6">
-                        <div>
-                            <input type="text" name="name" placeholder="Your Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200" required>
-                        </div>
-                        <div>
-                            <input type="email" name="email" placeholder="Your Email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200" required>
-                        </div>
-                        <div>
-                            <textarea name="message" placeholder="Tell us about your event..." rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200" required></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transform hover:scale-105 transition duration-300">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
+  <section id="testimonials" class="section">
+    <h2>Testimonials</h2>
+    <div class="testimonials">
+      <div class="card">“The doctors were very professional and kind. Highly recommend Karshni Eye Care!”</div>
+      <div class="card">“Best place for laser surgery. My vision has never been clearer.”</div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-6 text-center">
-            <div class="mb-4">
-                <a href="#" class="text-2xl font-bold">EVENTYATRA</a>
-            </div>
-            <p class="text-gray-400">&copy; 2024 EVENTYATRA. All rights reserved.</p>
-            <div class="mt-4 flex justify-center space-x-4">
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
-            </div>
+  <section id="appointment" class="section">
+    <h2>Book Appointment</h2>
+    <form id="appointment-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" required>
+      <label for="date">Preferred Date</label>
+      <input type="date" id="date" required>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <section id="innovations" class="section">
+    <h2>Our Innovations</h2>
+    <div class="innovations">
+      <div class="card"><h3>AI Diagnostics</h3><p>Leveraging AI for faster, more accurate eye disease detection.</p></div>
+      <div class="card"><h3>Tele-Ophthalmology</h3><p>Virtual consultations to reach patients anywhere.</p></div>
+      <div class="card"><h3>Smart Vision Care</h3><p>Wearable devices and digital tools for eye health monitoring.</p></div>
+    </div>
+  </section>
+
+  <section id="ai-diagnostics" class="section">
+    <h2>AI Diagnostics Demo</h2>
+    <form id="ai-form">
+      <label for="symptom-select">Select a symptom:</label>
+      <select id="symptom-select" required>
+        <option value="">--Choose--</option>
+        <option value="blurry">Blurry Vision</option>
+        <option value="pain">Eye Pain</option>
+        <option value="headache">Headache</option>
+        <option value="dry">Dry Eyes</option>
+      </select>
+      <button type="submit">Analyze</button>
+    </form>
+    <div id="ai-result" style="margin-top:1rem; font-weight:bold;"></div>
+  </section>
+
+  <section id="vision-tips" class="section">
+    <h2>Vision Tips</h2>
+    <div class="card" id="tip-box">Loading daily eye-care tip...</div>
+  </section>
+
+  <section id="symptom" class="section">
+    <h2>Symptom Checker</h2>
+    <form id="symptom-form">
+      <label><input type="checkbox" value="Blurry Vision"> Blurry Vision</label>
+      <label><input type="checkbox" value="Eye Pain"> Eye Pain</label>
+      <label><input type="checkbox" value="Headache"> Headache</label>
+      <label><input type="checkbox" value="Dry Eyes"> Dry Eyes</label>
+      <button type="submit">Check Symptoms</button>
+    </form>
+    <div id="symptom-result" style="margin-top:1rem; font-weight:bold;"></div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <div class="contact-container">
+      <div class="contact-info">
+        <h3>Get in Touch</h3>
+        <p><strong>Email:</strong> info@karshnieyecare.com</p>
+        <p><strong>Phone:</strong> +91-9876543210</p>
+        <p><strong>Address:</strong> 123 Vision Street, Lucknow, India</p>
+        <div style="margin-top:1rem">
+          <p><strong>Opening Hours</strong></p>
+          <p>Mon - Sat: 9:00 AM - 6:00 PM</p>
+          <p>Sunday: Closed</p>
         </div>
-    </footer>
+      </div>
+      <div class="contact-form">
+        <h3>Send us a Message</h3>
+        <form id="contact-form">
+          <div class="contact-row" style="display:flex; gap:1rem;">
+            <div style="flex:1">
+              <label for="cname">Name</label>
+              <input type="text" id="cname" required>
+            </div>
+            <div style="flex:1">
+              <label for="cemail">Email</label>
+              <input type="email" id="cemail" required>
+            </div>
+          </div>
+          <label for="cmessage">Message</label>
+          <textarea id="cmessage" rows="4" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+  <footer>
+    <p>&copy; 2025 Karshni Eye Care. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('nav');
+      if(menuToggle && nav){ menuToggle.addEventListener('click', () => { nav.classList.toggle('active'); }); }
+
+      const appointmentForm = document.getElementById('appointment-form');
+      if(appointmentForm){ appointmentForm.addEventListener('submit', e => { e.preventDefault(); alert('Appointment submitted successfully!'); appointmentForm.reset(); }); }
+
+      const contactForm = document.getElementById('contact-form');
+      if(contactForm){ contactForm.addEventListener('submit', e => { e.preventDefault(); alert('Your message has been sent!'); contactForm.reset(); }); }
+
+      const symptomForm = document.getElementById('symptom-form');
+      const symptomResult = document.getElementById('symptom-result');
+      if(symptomForm){
+        symptomForm.addEventListener('submit', e => {
+          e.preventDefault();
+          const checked = Array.from(symptomForm.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
+          if(checked.length===0){ symptomResult.textContent="Please select at least one symptom."; symptomResult.style.color="red"; }
+          else{
+            let details='';
+            if(checked.includes('Blurry Vision')) details+='Blurry Vision: Could indicate refractive errors or cataracts. ';
+            if(checked.includes('Eye Pain')) details+='Eye Pain: May be linked to infection or strain. ';
+            if(checked.includes('Headache')) details+='Headache: Often associated with eye strain or vision issues. ';
+            if(checked.includes('Dry Eyes')) details+='Dry Eyes: Common with prolonged screen time or aging. ';
+            symptomResult.textContent=details+' We recommend booking an appointment with our specialists.';
+            symptomResult.style.color='darkred';
+          }
         });
+      }
 
-        // Toggle mobile menu visibility
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Simple AI Proposal Generator
-        function generateProposal() {
-            const eventType = document.getElementById('event-type').value;
-            const attendees = document.getElementById('attendees').value;
-            const location = document.getElementById('location').value;
-            const outputDiv = document.getElementById('proposal-output');
-
-            if (!eventType || !attendees || !location) {
-                outputDiv.innerHTML = '<p class="text-red-500">Please fill out all fields to generate a proposal.</p>';
-                outputDiv.classList.remove('hidden');
-                return;
-            }
-
-            const proposals = {
-                "Conference": `<h3>Proposal for a Professional Conference</h3><p>Dear Valued Client,</p><p>Thank you for your interest in a corporate conference for approximately ${attendees} attendees in ${location}. Our proposed plan includes:</p><ul class="list-disc list-inside space-y-2 mt-4"><li><strong>Venue Sourcing:</strong> Selection of a top-tier conference center with state-of-the-art audiovisual capabilities.</li><li><strong>Logistics:</strong> Full management of speaker bookings, attendee registration, and onsite support.</li><li><strong>Accommodation:</strong> Group block bookings at premium hotels with special rates.</li><li><strong>Travel:</strong> Coordinated travel itineraries and ground transportation for all attendees.</li></ul><p class="mt-4">This preliminary proposal is designed to provide a starting point. We look forward to a more detailed discussion to tailor a perfect event for your company.</p>`,
-                "Team Building": `<h3>Proposal for a Team Building Event</h3><p>Dear Valued Client,</p><p>We are excited to propose a dynamic team-building event for your group of ${attendees} professionals in ${location}. This event focuses on strengthening team cohesion and morale through:</p><ul class="list-disc list-inside space-y-2 mt-4"><li><strong>Activity Planning:</strong> Customized activities such as outdoor adventure challenges, culinary workshops, or creative strategy games.</li><li><strong>Location Scouting:</strong> Selection of a unique and engaging venue, from a serene resort to an urban escape room.</li><li><strong>Group Travel:</strong> Seamless travel and transportation for all participants.</li><li><strong>Professional Facilitation:</strong> Expert facilitators to guide activities and ensure all objectives are met.</li></ul><p class="mt-4">Let's connect to customize this proposal and design a program that truly resonates with your team.</p>`,
-                "Product Launch": `<h3>Proposal for a Product Launch Event</h3><p>Dear Valued Client,</p><p>To make a splash with your new product, we propose an unforgettable launch event for ${attendees} guests in ${location}. Our plan focuses on creating a memorable brand experience:</p><ul class="list-disc list-inside space-y-2 mt-4"><li><strong>Venue Selection:</strong> A stylish and impactful venue that aligns with your brand's identity.</li><li><strong>Thematic Decor:</strong> Custom lighting, sound, and visual elements to enhance the product reveal.</li><li><strong>Guest Experience:</strong> Management of VIP invitations, media relations, and on-site hospitality.</li><li><strong>Post-Event:</strong> Follow-up reporting and media coverage tracking.</li></ul><p class="mt-4">This initial concept is designed to capture your vision. We are ready to build on this to create a truly spectacular launch event.</p>`,
-                "Executive Retreat": `<h3>Proposal for an Executive Retreat</h3><p>Dear Valued Client,</p><p>For your executive team of ${attendees} in ${location}, we propose a strategic retreat designed for maximum productivity and relaxation. Our proposal includes:</p><ul class="list-disc list-inside space-y-2 mt-4"><li><strong>Secluded Venue:</strong> A high-end, private location that offers an environment of focus and confidentiality.</li><li><strong>Bespoke Activities:</strong> Curated professional development sessions and exclusive leisure activities.</li><li><strong>VIP Travel:</strong> Private transportation and luxury accommodation for all executives.</li><li><strong>Concierge Service:</strong> Dedicated support to handle every personal and professional need.</li></ul><p class="mt-4">This is a starting point for an exclusive experience. We can refine every detail to meet the unique needs of your leadership team.</p>`
-            };
-
-            const proposal = proposals[eventType] || `<h3>Proposal Not Available</h3><p>No specific proposal template is available for the selected event type. Please contact us directly for a custom quote.</p>`;
-            outputDiv.innerHTML = proposal;
-            outputDiv.classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+      const aiForm = document.getElementById('ai-form');
+      const aiResult = document.getElementById('ai-result');
+      if(aiForm){
+        aiForm.addEventListener('submit', e => {
+          e.preventDefault();
+          const value=document.getElementById('symptom-select').value;
+          let advice='';
+          switch(value){
+            case 'blurry': advice='AI Suggests: Possible refractive error or cataract. Please book a detailed eye exam.'; break;
+            case 'pain': advice='AI Suggests: Could be eye strain or infection. Avoid rubbing eyes and consult immediately.'; break;
+            case 'headache': advice='AI Suggests: Might be vision strain. Limit screen time and schedule a check-up.'; break;
+            case 'dry': advice='AI Suggests: Likely dry eye syndrome. Use lubricating drops and reduce screen glare.'; break;
+            default: advice='Please select a symptom to analyze.';
+          }
